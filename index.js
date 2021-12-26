@@ -1,6 +1,9 @@
 //function to add image carousel
-function carousel(mainId) {
-  let dim = 500;
+function carousel(mainId,holdDelay=5000,transDelay=600) {
+  const dim = 500;
+  const delay = holdDelay;
+  const FPS=50;
+  let hold;
   let imageContainer = document.getElementById(mainId);
   imageContainer.style.display = "block";
   imageContainer.style.backgroundColor = "red";
@@ -9,7 +12,6 @@ function carousel(mainId) {
   imageContainer.style.margin = "0 auto";
   imageContainer.style.position = "relative";
   imageContainer.style.overflow = "hidden";
-  const delay = 10;
   let pos = 0;
   let imageRow = document.querySelector(`#${mainId} div`);
   imageRow.style.position = "relative";
@@ -27,6 +29,8 @@ function carousel(mainId) {
     images[i].style.position = "absolute";
     images[i].style.left = i * dim + "px";
   }
+  //setting transition delay
+  let transDelayTotal=dim/(FPS*transDelay/1000);
   //button-left
 
   let buttonLeft = document.createElement("button");
@@ -62,7 +66,7 @@ function carousel(mainId) {
   dotsContainer.style.position = "absolute";
   dotsContainer.style.zIndex = "10";
   dotsContainer.style.top = "424px";
-  dotsContainer.style.left = (70+(550-70)/(images.length-1))+'px';
+  dotsContainer.style.left = 70 + (550 - 70) / (images.length - 1) + "px";
   imageContainer.appendChild(dotsContainer);
   //creating dot elements
   for (let i = 0; i < images.length; i++) {
@@ -78,21 +82,30 @@ function carousel(mainId) {
     dotsContainer.appendChild(dots[i]);
     dots[0].style.backgroundColor = "red";
   }
-
+  //setting hold-transition
+  function autoTranslate(){
+  hold=setTimeout(()=>{
+    shiftLeft(transDelayTotal);
+  },delay);
+}
+autoTranslate();
   //adding event-listeners to the buttons
   buttonLeft.addEventListener("click", shift);
   buttonRight.addEventListener("click", shift);
   function shift(e) {
     pos = parseInt(imageRow.style.left);
     if (e.target.getAttribute("id") === mainId + "btn-left") {
-      shiftRight(delay);
+      shiftRight(transDelayTotal);
     } else if (e.target.getAttribute("id") === mainId + "btn-right") {
-      shiftLeft(delay);
+      shiftLeft(transDelayTotal);
     }
   }
   let leftShifting;
   let rightShifting;
   function shiftLeft(d) {
+    buttonLeft.disabled=true;
+    buttonRight.disabled=true;
+    clearTimeout(hold);
     if (index === -(images.length - 1)) {
       for (let i = 0; i < images.length - 1; i++) {
         shiftRight(100);
@@ -110,8 +123,14 @@ function carousel(mainId) {
       imageRow.style.left = pos + "px";
     }
     colorizeDot(dots[-index]);
+    buttonLeft.disabled=false;
+    buttonRight.disabled=false;
+    autoTranslate();
   }
   function shiftRight(d) {
+    clearTimeout(hold);
+    buttonLeft.disabled=true;
+    buttonRight.disabled=true;
     if (index === 0) {
       for (let i = 0; i < images.length - 1; i++) {
         shiftLeft(100);
@@ -129,20 +148,20 @@ function carousel(mainId) {
       imageRow.style.left = pos + "px";
     }
     colorizeDot(dots[-index]);
+    buttonLeft.disabled=false;
+    buttonRight.disabled=false;
+    autoTranslate();
   }
 
   //handling clicks on the dots
   function handleDot(e) {
-    let ind = parseInt(
-      e.target.getAttribute("class").slice(mainId.length + 3)
-    );
+    let ind = parseInt(e.target.getAttribute("class").slice(mainId.length + 3));
     console.log(ind);
     let diff = -ind - index;
     console.log(diff);
     if (diff < 0) {
       for (let i = 0; i < Math.abs(diff); i++) {
         shiftLeft(50);
-        console.log("less");
       }
     } else {
       console.log("more");
@@ -161,6 +180,5 @@ function carousel(mainId) {
   }
 }
 
-
-carousel("image-container");
-carousel("image-container2");
+carousel("image-container",5000,1000);
+carousel("image-container2",2000,2000);
