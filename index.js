@@ -116,8 +116,6 @@ autoTranslate();
     if (pos <= (index - 1) * dim) {
       window.cancelAnimationFrame(leftShifting);
       index -= 1;
-      console.log("shiftLeft");
-      console.log(index + " " + pos);
     } else {
       pos -= d;
       imageRow.style.left = pos + "px";
@@ -141,8 +139,6 @@ autoTranslate();
     if (pos >= (index + 1) * dim) {
       window.cancelAnimationFrame(rightShifting);
       index += 1;
-      console.log("shift right");
-      console.log(index + " " + pos);
     } else {
       pos += d;
       imageRow.style.left = pos + "px";
@@ -156,15 +152,12 @@ autoTranslate();
   //handling clicks on the dots
   function handleDot(e) {
     let ind = parseInt(e.target.getAttribute("class").slice(mainId.length + 3));
-    console.log(ind);
     let diff = -ind - index;
-    console.log(diff);
     if (diff < 0) {
       for (let i = 0; i < Math.abs(diff); i++) {
         shiftLeft(50);
       }
     } else {
-      console.log("more");
       for (let i = 0; i < Math.abs(diff); i++) {
         shiftRight(50);
       }
