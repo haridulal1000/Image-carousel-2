@@ -1,8 +1,8 @@
 //function to add image carousel
-function carousel(mainId,holdDelay=5000,transDelay=600) {
+function carousel(mainId, holdDelay = 5000, transDelay = 600) {
   const dim = 500;
   const delay = holdDelay;
-  const FPS=50;
+  const FPS = 50;
   let hold;
   let imageContainer = document.getElementById(mainId);
   imageContainer.style.display = "block";
@@ -30,7 +30,7 @@ function carousel(mainId,holdDelay=5000,transDelay=600) {
     images[i].style.left = i * dim + "px";
   }
   //setting transition delay
-  let transDelayTotal=dim/(FPS*transDelay/1000);
+  let transDelayTotal = dim / ((FPS * transDelay) / 1000);
   //button-left
 
   let buttonLeft = document.createElement("button");
@@ -83,12 +83,12 @@ function carousel(mainId,holdDelay=5000,transDelay=600) {
     dots[0].style.backgroundColor = "red";
   }
   //setting hold-transition
-  function autoTranslate(){
-  hold=setTimeout(()=>{
-    shiftLeft(transDelayTotal);
-  },delay);
-}
-autoTranslate();
+  function autoTranslate() {
+    hold = setTimeout(() => {
+      shiftLeft(transDelayTotal);
+    }, delay);
+  }
+  autoTranslate();
   //adding event-listeners to the buttons
   buttonLeft.addEventListener("click", shift);
   buttonRight.addEventListener("click", shift);
@@ -103,8 +103,8 @@ autoTranslate();
   let leftShifting;
   let rightShifting;
   function shiftLeft(d) {
-    buttonLeft.disabled=true;
-    buttonRight.disabled=true;
+    buttonLeft.disabled = true;
+    buttonRight.disabled = true;
     clearTimeout(hold);
     if (index === -(images.length - 1)) {
       for (let i = 0; i < images.length - 1; i++) {
@@ -115,21 +115,22 @@ autoTranslate();
     leftShifting = window.requestAnimationFrame(() => shiftLeft(d));
     if (pos <= (index - 1) * dim) {
       pos = (index - 1) * dim;
+      imageRow.style.left = pos + "px";
       window.cancelAnimationFrame(leftShifting);
       index -= 1;
+      colorizeDot(dots[-index]);
+      buttonLeft.disabled = false;
+      buttonRight.disabled = false;
+      autoTranslate();
     } else {
       pos -= d;
       imageRow.style.left = pos + "px";
     }
-    colorizeDot(dots[-index]);
-    buttonLeft.disabled=false;
-    buttonRight.disabled=false;
-    autoTranslate();
   }
   function shiftRight(d) {
     clearTimeout(hold);
-    buttonLeft.disabled=true;
-    buttonRight.disabled=true;
+    buttonLeft.disabled = true;
+    buttonRight.disabled = true;
     if (index === 0) {
       for (let i = 0; i < images.length - 1; i++) {
         shiftLeft(100);
@@ -138,17 +139,18 @@ autoTranslate();
     }
     rightShifting = window.requestAnimationFrame(() => shiftRight(d));
     if (pos >= (index + 1) * dim) {
-      pos=(index+1)*dim;
+      pos = (index + 1) * dim;
+      imageRow.style.left = pos + "px";
       window.cancelAnimationFrame(rightShifting);
       index += 1;
+      colorizeDot(dots[-index]);
+      buttonLeft.disabled = false;
+      buttonRight.disabled = false;
+      autoTranslate();
     } else {
       pos += d;
       imageRow.style.left = pos + "px";
     }
-    colorizeDot(dots[-index]);
-    buttonLeft.disabled=false;
-    buttonRight.disabled=false;
-    autoTranslate();
   }
 
   //handling clicks on the dots
@@ -175,5 +177,5 @@ autoTranslate();
   }
 }
 
-carousel("image-container",5000,1000);
-carousel("image-container2",2000,2000);
+carousel("image-container", 5000, 1000);
+carousel("image-container2", 2000, 2000);
