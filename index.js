@@ -114,6 +114,7 @@ autoTranslate();
     }
     leftShifting = window.requestAnimationFrame(() => shiftLeft(d));
     if (pos <= (index - 1) * dim) {
+      pos = (index - 1) * dim;
       window.cancelAnimationFrame(leftShifting);
       index -= 1;
     } else {
@@ -137,6 +138,7 @@ autoTranslate();
     }
     rightShifting = window.requestAnimationFrame(() => shiftRight(d));
     if (pos >= (index + 1) * dim) {
+      pos=(index+1)*dim;
       window.cancelAnimationFrame(rightShifting);
       index += 1;
     } else {
