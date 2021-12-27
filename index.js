@@ -1,7 +1,8 @@
 //function to add image carousel
-function carousel(mainId, holdDelay = 5000, transDelay = 600) {
-  const dim = 500;
-  const delay = holdDelay;
+  function carousel(properties) {
+    const mainId=properties.mainId;
+  const dim = properties.dim;
+  const delay = properties.holdDelay;
   const FPS = 50;
   let hold;
   let imageContainer = document.getElementById(mainId);
@@ -30,7 +31,7 @@ function carousel(mainId, holdDelay = 5000, transDelay = 600) {
     images[i].style.left = i * dim + 'px';
   }
   //setting transition delay
-  let transDelayTotal = dim / ((FPS * transDelay) / 1000);
+  let transDelayTotal = dim / ((FPS * properties.transDelay) / 1000);
   //button-left
 
   let buttonLeft = document.createElement('button');
@@ -177,6 +178,19 @@ function carousel(mainId, holdDelay = 5000, transDelay = 600) {
     e.style.backgroundColor = 'red';
   }
 }
+let properties1={
+  mainId:'image-container',
+  dim:500,
+  holdDelay:5000,
+  transDelay:1000
 
-carousel('image-container', 5000, 1000);
-carousel('image-container2', 2000, 2000);
+}
+let properties2={
+  mainId:'image-container2',
+  dim:500,
+  holdDelay:2000,
+  transDelay:500
+
+}
+carousel(properties1);
+carousel(properties2);
