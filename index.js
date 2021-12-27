@@ -43,7 +43,7 @@
   buttonLeft.style.backgroundColor = 'transparent';
   buttonLeft.style.color = 'white';
   buttonLeft.style.border = 'none';
-  buttonLeft.style.top = '200px';
+  buttonLeft.style.top = dim/2+'px';
   imageContainer.appendChild(buttonLeft);
 
   //button-right
@@ -56,8 +56,8 @@
   buttonRight.style.backgroundColor = 'transparent';
   buttonRight.style.color = 'white';
   buttonRight.style.border = 'none';
-  buttonRight.style.top = '200px';
-  buttonRight.style.left = '454px';
+  buttonRight.style.top = dim/2+'px';
+  buttonRight.style.right = '0px';
   imageContainer.appendChild(buttonRight);
   //dots
   let dots = [];
@@ -66,8 +66,9 @@
   dotsContainer.style.margin = '0 -15%';
   dotsContainer.style.position = 'absolute';
   dotsContainer.style.zIndex = '10';
-  dotsContainer.style.top = '424px';
-  dotsContainer.style.left = 70 + (550 - 70) / (images.length - 1) + 'px';
+  dotsContainer.style.bottom = '0px';
+  dotsContainer.style.alignItems='center';
+  dotsContainer.style.left = dim/2 + 'px';
   imageContainer.appendChild(dotsContainer);
   //creating dot elements
   for (let i = 0; i < images.length; i++) {
@@ -187,7 +188,7 @@ let properties1={
 }
 let properties2={
   mainId:'image-container2',
-  dim:500,
+  dim:700,
   holdDelay:2000,
   transDelay:500
 
