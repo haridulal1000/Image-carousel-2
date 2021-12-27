@@ -75,7 +75,8 @@ function carousel(mainId, holdDelay = 5000, transDelay = 600) {
     dot.style.display = "inline-block";
     dot.style.margin = "10px";
     dot.style.backgroundColor = "white";
-    dot.setAttribute("class", mainId + "dot" + i);
+    dot.setAttribute("id", mainId + "dot" + i);
+    dot.setAttribute("class", "dots");
     dot.style.borderRadius = "50%";
     dot.addEventListener("click", handleDot);
     dots.push(dot);
@@ -155,7 +156,7 @@ function carousel(mainId, holdDelay = 5000, transDelay = 600) {
 
   //handling clicks on the dots
   function handleDot(e) {
-    let ind = parseInt(e.target.getAttribute("class").slice(mainId.length + 3));
+    let ind = parseInt(e.target.getAttribute("id").slice(mainId.length + 3));
     let diff = -ind - index;
     if (diff < 0) {
       for (let i = 0; i < Math.abs(diff); i++) {
